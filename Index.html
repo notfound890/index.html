@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEXA PROTECTOR 🔐</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root { --neon: #bc13fe; --bg: #050505; }
+        body { margin: 0; background-color: var(--bg); color: #fff; font-family: sans-serif; overflow: hidden; }
+        #particles-js { position: absolute; width: 100%; height: 100%; z-index: -1; }
+        .card { position: relative; top: 50vh; left: 50%; transform: translate(-50%, -50%); background: rgba(20,20,20,0.9); padding: 30px; border-radius: 20px; border: 2px solid var(--neon); width: 85%; max-width: 400px; text-align: center; box-shadow: 0 0 20px var(--neon); }
+        h1 { color: var(--neon); text-shadow: 0 0 10px var(--neon); margin: 0; }
+        textarea { width: 100%; height: 120px; background: #000; border: 1px solid #333; border-radius: 8px; color: #fff; padding: 10px; margin-top: 15px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; margin-top: 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .gen { background: var(--neon); color: #fff; }
+        .copy { background: #00ffcc; color: #000; display: none; }
+        #res-box { display: none; margin-top: 15px; background: #111; padding: 10px; border-radius: 5px; font-size: 11px; color: #00ffcc; word-break: break-all; border: 1px dashed var(--neon); }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="card">
+        <h1>JEXA PROTECTOR 🔐</h1>
+        <p style="font-size: 10px; color: #888;">ADVANCED OBFUSCATOR SYSTEM</p>
+        <textarea id="in" placeholder="-- Pega tu script aquí..."></textarea>
+        <button class="btn gen" onclick="go()">PROTEGER SCRIPT</button>
+        <div id="res-box"></div>
+        <button id="btnC" class="btn copy" onclick="cp()">COPIAR LOADSTRING</button>
+    </div>
+    <script>
+        particlesJS("particles-js", {"particles":{"number":{"value":80},"color":{"value":"#bc13fe"},"line_linked":{"enable":true,"color":"#bc13fe"},"move":{"speed":2}}});
+        async function go() {
+            const c = document.getElementById('in').value;
+            if(!c) return alert("Pega un código");
+            const r = await fetch('/api/save', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({script:c})});
+            const d = await r.json();
+            const l = window.location.origin + '/api/raw?id=' + d.id;
+            document.getElementById('res-box').innerText = 'loadstring(game:HttpGet("'+l+'"))()';
+            document.getElementById('res-box').style.display = 'block';
+            document.getElementById('btnC').style.display = 'block';
+        }
+        function cp() { navigator.clipboard.writeText(document.getElementById('res-box').innerText); alert("¡Copiado!"); }
+    </script>
+</body>
+</html>
+
