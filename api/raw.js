@@ -2,7 +2,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
     const userAgent = req.headers['user-agent'] || '';
 
-    // Buscar el script en Supabase
+    // 1. Buscar el script en tu base de datos de Supabase
     const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/scripts?script_id=eq.${id}&select=content`, {
         headers: {
             'apikey': process.env.SUPABASE_KEY,
@@ -11,15 +11,17 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    const scriptContent = (data && data.length > 0) ? data[0].content : "-- Error: Script no encontrado";
+    const scriptContent = (data && data.length > 0) ? data[0].content : "-- Error: Script no encontrado en la base de datos de Jexa";
 
-    // SI ES ROBLOX: Entregar solo el código puro
-    if (userAgent.includes('Roblox')) {
-        res.setHeader('Content-Type', 'text/plain');
+    // 2. DETECCIÓN PARA EJECUTORES (Delta, Fluxus, Roblox)
+    // Agregamos 'Protocol' y 'Roblox' para que los ejecutores lo acepten sin problemas
+    if (userAgent.includes('Roblox') || userAgent.includes('Protocol') || userAgent.includes('r_os_android')) {
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Permite que el ejecutor lea el link
         return res.status(200).send(scriptContent);
     }
 
-    // SI ES UN NAVEGADOR: Mostrar la página de protección con efecto Matrix
+    // 3. DISEÑO PARA EL NAVEGADOR (Efecto Matrix Morado)
     res.setHeader('Content-Type', 'text/html');
     return res.status(200).send(`
         <!DOCTYPE html>
@@ -28,12 +30,12 @@ export default async function handler(req, res) {
             <meta charset="UTF-8">
             <title>JEXA PROTECTOR 🔐</title>
             <style>
-                body { margin: 0; background: #000; color: #0f0; font-family: 'Courier New', monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
-                canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.3; }
-                .content { position: relative; z-index: 2; text-align: center; background: rgba(0,0,0,0.8); padding: 40px; border: 2px solid #bc13fe; border-radius: 15px; box-shadow: 0 0 30px #bc13fe; max-width: 80%; }
-                h1 { color: #bc13fe; font-size: 2.5rem; text-shadow: 0 0 10px #bc13fe; margin-bottom: 10px; }
-                p { color: #fff; letter-spacing: 2px; font-size: 14px; }
-                .link { color: #00ffcc; text-decoration: none; font-size: 12px; margin-top: 20px; display: block; opacity: 0.7; }
+                body { margin: 0; background: #000; color: #bc13fe; font-family: 'Courier New', monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+                canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.4; }
+                .content { position: relative; z-index: 2; text-align: center; background: rgba(0,0,0,0.85); padding: 40px; border: 2px solid #bc13fe; border-radius: 20px; box-shadow: 0 0 40px #bc13fe; max-width: 90%; }
+                h1 { color: #bc13fe; font-size: 2.2rem; text-shadow: 0 0 15px #bc13fe; margin: 0; }
+                p { color: #fff; letter-spacing: 1px; font-size: 14px; margin-top: 15px; }
+                .link { color: #888; text-decoration: none; font-size: 11px; margin-top: 25px; display: block; }
             </style>
         </head>
         <body>
@@ -41,15 +43,15 @@ export default async function handler(req, res) {
             <div class="content">
                 <h1>JEXA PROTECTOR 🔐</h1>
                 <p>ESTE SCRIPT ESTÁ PROTEGIDO POR EL SISTEMA DE JEXA</p>
-                <p style="color: #888; font-size: 10px;">ID DETECTADO: ${id}</p>
-                <a class="link" href="#">https://index-html-pearl-one-44.vercel.app/</a>
+                <p style="color: #bc13fe; font-weight: bold;">ID: ${id}</p>
+                <a class="link" href="#">index-html-pearl-one-44.vercel.app</a>
             </div>
             <script>
                 const canvas = document.getElementById('matrix');
                 const ctx = canvas.getContext('2d');
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+                const letters = "JEXAPROTECTOR01010101";
                 const fontSize = 16;
                 const columns = canvas.width / fontSize;
                 const drops = Array(Math.floor(columns)).fill(1);
@@ -65,7 +67,7 @@ export default async function handler(req, res) {
                         drops[i]++;
                     }
                 }
-                setInterval(draw, 33);
+                setInterval(draw, 35);
             </script>
         </body>
         </html>
