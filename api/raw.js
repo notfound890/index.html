@@ -1,33 +1,33 @@
 export default async function handler(req, res) {
     const { id } = req.query;
-    const userAgent = req.headers['user-agent'] || '';
+
+    // Usamos las variables de Vercel para que sea seguro y automático
+    const SB_URL = process.env.SUPABASE_URL;
+    const SB_KEY = process.env.SUPABASE_KEY;
 
     try {
-        const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/scripts?script_id=eq.${id}&select=content`, {
+        const response = await fetch(`${SB_URL}/rest/v1/scripts?script_id=eq.${id}&select=content`, {
             headers: {
-                'apikey': process.env.SUPABASE_KEY,
-                'Authorization': `Bearer ${process.env.SUPABASE_KEY}`
+                'apikey': SB_KEY,
+                'Authorization': `Bearer ${SB_KEY}`
             }
         });
 
         const data = await response.json();
         
-        // Si no hay datos, enviamos un print para que lo veas en la consola de Roblox
+        // Si el ID existe, entrega el código; si no, manda un error visible en Roblox
         if (!data || data.length === 0) {
             res.setHeader('Content-Type', 'text/plain');
-            return res.status(200).send(`print("JEXA ERROR: El ID ${id} no existe en la base de datos.")`);
+            return res.status(200).send(`print("JEXA ERROR: El ID ${id} no existe.")`);
         }
 
         const scriptContent = data[0].content;
 
-        // Forzamos la respuesta para ejecutores
+        // Configuramos los encabezados para que el ejecutor lo lea correctamente
         res.setHeader('Content-Type', 'text/plain; charset=utf-8');
         res.setHeader('Access-Control-Allow-Origin', '*');
         
-        // Enviamos un mensaje de confirmación + el código original
-        const finalCode = `print("JEXA SYSTEM: Cargando script ID ${id}...");\n` + scriptContent;
-        
-        return res.status(200).send(finalCode);
+        return res.status(200).send(scriptContent);
 
     } catch (err) {
         res.setHeader('Content-Type', 'text/plain');
