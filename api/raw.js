@@ -2,49 +2,35 @@ export default async function handler(req, res) {
     const { id } = req.query;
     const userAgent = req.headers['user-agent'] || '';
 
-    // Variables directas para evitar errores de entorno
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_KEY;
-
     try {
-        // Petición ultra-limpia a Supabase
-        const response = await fetch(`${supabaseUrl}/rest/v1/scripts?script_id=eq.${id}&select=content`, {
-            method: 'GET',
+        const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/scripts?script_id=eq.${id}&select=content`, {
             headers: {
-                'apikey': supabaseKey,
-                'Authorization': `Bearer ${supabaseKey}`,
-                'Content-Type': 'application/json'
+                'apikey': process.env.SUPABASE_KEY,
+                'Authorization': `Bearer ${process.env.SUPABASE_KEY}`
             }
         });
 
-        // Si Supabase responde mal, lo sabremos aquí
-        if (!response.ok) {
-            return res.status(response.status).send(`-- Error de Base de Datos: ${response.status}`);
-        }
-
         const data = await response.json();
-        const scriptContent = (data && data.length > 0) ? data[0].content : "-- Error: Script no encontrado";
-
-        // SI ES ROBLOX / DELTA / FLUXUS
-        if (userAgent.includes('Roblox') || userAgent.includes('Protocol') || !userAgent.includes('Mozilla')) {
-            res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            return res.status(200).send(scriptContent);
+        
+        // Si no hay datos, enviamos un print para que lo veas en la consola de Roblox
+        if (!data || data.length === 0) {
+            res.setHeader('Content-Type', 'text/plain');
+            return res.status(200).send(`print("JEXA ERROR: El ID ${id} no existe en la base de datos.")`);
         }
 
-        // SI ES NAVEGADOR (Tu diseño Matrix)
-        res.setHeader('Content-Type', 'text/html');
-        return res.status(200).send(`
-            <html>
-            <body style="background:#000;color:#bc13fe;font-family:monospace;display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;margin:0;">
-                <h1 style="text-shadow:0 0 15px #bc13fe;">JEXA PROTECTOR 🔐</h1>
-                <p style="color:#fff;">ID: ${id} - ESTADO: ACTIVO</p>
-                <p style="font-size:10px;color:#444;">NotFound Hub System</p>
-            </body>
-            </html>
-        `);
+        const scriptContent = data[0].content;
+
+        // Forzamos la respuesta para ejecutores
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        
+        // Enviamos un mensaje de confirmación + el código original
+        const finalCode = `print("JEXA SYSTEM: Cargando script ID ${id}...");\n` + scriptContent;
+        
+        return res.status(200).send(finalCode);
 
     } catch (err) {
-        return res.status(500).send("-- Error Interno del Servidor");
+        res.setHeader('Content-Type', 'text/plain');
+        return res.status(200).send(`print("JEXA ERROR CRITICO: ${err.message}")`);
     }
 }
