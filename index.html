@@ -3,227 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jexa Hub | Scripts</title>
+    <title>Jexa Hub | Official</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
-        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; user-select: none; }
+        body { background-color: #050505; color: #fff; overflow-x: hidden; }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+        .glow-bg { position: fixed; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(147, 51, 234, 0.1) 0%, transparent 70%); z-index: -1; }
+        .header { text-align: center; padding: 60px 20px 30px; }
+        .title { font-size: 4.5rem; font-weight: 700; background: linear-gradient(to right, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)); letter-spacing: -3px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         
-        body { 
-            background-color: #050505; 
-            color: #fff; 
-            overflow-x: hidden;
-        }
-
-        /* Lluvia de fondo */
-        canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        /* Efecto de luz central */
-        .glow-bg {
-            position: fixed;
-            top: -20%; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%);
-            z-index: -1;
-        }
-
-        .header { text-align: center; padding: 70px 20px 40px; }
-        .title { 
-            font-size: 4rem; 
-            font-weight: 700; 
-            background: linear-gradient(to right, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 10px 30px rgba(168, 85, 247, 0.4);
-            letter-spacing: -2px;
-        }
-        .subtitle { color: #888; font-size: 1.2rem; margin-top: 5px; }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; z-index: 1; position: relative; }
-
-        .category-title { 
-            font-size: 1.5rem; color: #fff; margin: 40px 0 20px; 
-            display: flex; align-items: center; gap: 10px;
-        }
-        .category-title::after {
-            content: ""; flex: 1; height: 1px; background: linear-gradient(to right, rgba(168,85,247,0.5), transparent);
-        }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-
-        /* Diseño Glassmorphism Ultra */
-        .card {
-            background: rgba(20, 20, 25, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(168, 85, 247, 0.5);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.1) inset;
-        }
-
-        .card h3 { font-size: 1.5rem; color: #fff; margin-bottom: 12px; }
-        .card p { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
-
-        /* Botón animado */
-        .btn {
-            display: block; width: 100%;
-            background: rgba(168, 85, 247, 0.1);
-            color: #d8b4fe;
-            padding: 12px 0;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 10px;
-            font-size: 1rem; font-weight: 600; text-align: center;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .btn:hover {
-            background: #a855f7; color: #fff;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
-        }
-        .btn:active { transform: scale(0.96); }
-
-        /* Botón inicial para activar audio */
-        #start-audio {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #a855f7; border: none; padding: 10px 20px;
-            border-radius: 20px; color: white; cursor: pointer; z-index: 100;
-        }
+        /* Diseño Pro */
+        .card { background: rgba(15, 15, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px; backdrop-filter: blur(15px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card:hover { transform: translateY(-10px); border-color: #a855f7; box-shadow: 0 15px 40px rgba(0,0,0,0.7); }
+        .card h3 { font-size: 1.6rem; margin-bottom: 12px; color: #fff; letter-spacing: -1px; }
+        .card p { color: #999; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; }
+        
+        .btn { display: block; width: 100%; background: linear-gradient(45deg, #a855f7, #7c3aed); color: #fff; padding: 14px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; text-transform: uppercase; }
+        .btn:hover { filter: brightness(1.2); transform: scale(1.03); box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+        
+        #start-audio { position: fixed; bottom: 30px; right: 30px; background: #a855f7; padding: 15px 25px; border-radius: 50px; color: #fff; cursor: pointer; z-index: 100; font-weight: 900; border: none; box-shadow: 0 0 30px rgba(168,85,247,0.6); animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        /* Ocultar el reproductor de YT */
+        #yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
-
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3?filename=heavy-rain-nature-sounds-8186.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="clickSound">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_78ecbdcebb.mp3?filename=ui-click-43196.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="rainSound" loop src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3?filename=heavy-rain-nature-sounds-8186.mp3"></audio>
+    <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_78ecbdcebb.mp3?filename=ui-click-43196.mp3"></audio>
+    
+    <div id="yt-player"></div>
 
     <div class="glow-bg"></div>
     <canvas id="rainCanvas"></canvas>
+    
+    <button id="start-audio" onclick="activarTodo()">🌧️ ACTIVAR EXPERIENCIA</button>
 
-    <button id="start-audio" onclick="iniciarAudio()">🌧️ Activar Sonido</button>
-
-    <div class="header">
-        <h1 class="title">JEXA HUB</h1>
-        <p class="subtitle">Scripts Privados & Herramientas</p>
-    </div>
+    <div class="header"><h1 class="title">JEXA HUB</h1></div>
 
     <div class="container">
-        
-        <h2 class="category-title">⚡ Scripts Exclusivos</h2>
         <div class="grid">
             <div class="card">
                 <h3>Jexa Ping Pong</h3>
-                <p>Script optimizado con interfaz limpia para dominar en el juego. Ligero y sin caídas de FPS.</p>
-                <button class="btn" onclick="copiarScript(this, 'loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">Copiar Script</button>
+                <p>Pa' que domines el Ping Pong fácil. Carga al toque, es súper ligero y no da bajones de FPS. Está rotísimo.</p>
+                <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
             </div>
-            
             <div class="card">
-                <h3>Jexa Duels</h3>
-                <p>La mejor herramienta de duelos diseñada para funcionar perfectamente tanto en PC como en Android.</p>
-                <button class="btn" onclick="copiarScript(this, 'loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">Copiar Script</button>
+                <h3>Jexa Duels (PC/Android)</h3>
+                <p>No te van a ganar ni una sola. Optimizado pa' que no se te cierre el juego en medio del duelo. Funciona en todo.</p>
+                <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
             </div>
         </div>
-
-        <h2 class="category-title">🌐 Enlaces</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Comunidad Discord</h3>
-                <p>Entra a nuestro servidor para recibir actualizaciones, soporte y nuevos scripts antes que nadie.</p>
-                <button class="btn" style="border-color: #5865F2; color: #5865F2;" onmouseover="this.style.background='#5865F2'; this.style.color='#fff'" onmouseout="this.style.background='transparent'; this.style.color='#5865F2'">Unirse ahora</button>
-            </div>
-        </div>
-
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // --- SISTEMA DE SONIDOS Y COPIADO ---
-        const clickAudio = document.getElementById('clickSound');
-        const bgAudio = document.getElementById('bgMusic');
-        bgAudio.volume = 0.3; // Volumen de la lluvia al 30%
-
-        function iniciarAudio() {
-            bgAudio.play();
-            document.getElementById('start-audio').style.display = 'none';
-        }
-
-        function copiarScript(boton, texto) {
-            // Reproducir sonido de clic
-            clickAudio.currentTime = 0;
-            clickAudio.play();
-
-            // Copiar al portapapeles
-            navigator.clipboard.writeText(texto);
-
-            // Cambiar texto del botón temporalmente
-            const textoOriginal = boton.innerText;
-            boton.innerText = "¡Copiado con éxito! ✔️";
-            boton.style.background = "#10b981"; // Color verde
-            boton.style.color = "white";
-            boton.style.borderColor = "#10b981";
-
-            setTimeout(() => {
-                boton.innerText = textoOriginal;
-                boton.style.background = "rgba(168, 85, 247, 0.1)";
-                boton.style.color = "#d8b4fe";
-                boton.style.borderColor = "rgba(168, 85, 247, 0.3)";
-            }, 2000);
-        }
-
-        // --- SISTEMA DE LLUVIA ANIMADA EN CANVAS ---
-        const canvas = document.getElementById('rainCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const drops = [];
-        for(let i = 0; i < 150; i++) {
-            drops.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                length: Math.random() * 20 + 10,
-                speed: Math.random() * 10 + 15
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0', width: '0',
+                videoId: 'CKI8iQTgZKU',
+                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'CKI8iQTgZKU' },
+                events: { 'onReady': (e) => e.target.setVolume(30) } // Volumen moderado (30%)
             });
         }
 
-        function drawRain() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(168, 85, 247, 0.3)'; // Lluvia con un ligero tono morado
-            ctx.lineWidth = 1.5;
-            ctx.lineCap = 'round';
-
-            for(let i = 0; i < drops.length; i++) {
-                const p = drops[i];
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p.x, p.y + p.length);
-                ctx.stroke();
-                p.y += p.speed;
-                if(p.y > canvas.height) {
-                    p.y = -p.length;
-                    p.x = Math.random() * canvas.width;
-                }
-            }
-            requestAnimationFrame(drawRain);
+        function activarTodo() {
+            // Activar YouTube
+            if (player) player.playVideo();
+            // Activar Lluvia
+            document.getElementById('rainSound').play();
+            // Ocultar botón
+            document.getElementById('start-audio').style.display = 'none';
         }
-        drawRain();
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        function copiar(t) { 
+            document.getElementById('clickSound').play(); 
+            navigator.clipboard.writeText(t); 
+            event.target.innerText = '¡COPIADO! ✔️'; 
+            setTimeout(() => event.target.innerText = 'COPIAR SCRIPT', 2000); 
+        }
+
+        // --- LLUVIA ---
+        const rain = document.getElementById('rainCanvas');
+        const ctx = rain.getContext('2d');
+        rain.width = window.innerWidth; rain.height = window.innerHeight;
+        let drops = Array(150).fill().map(() => ({x: Math.random()*rain.width, y: Math.random()*rain.height, l: Math.random()*20+10, s: Math.random()*10+15}));
+        function animate() {
+            ctx.clearRect(0,0,rain.width,rain.height); ctx.strokeStyle = 'rgba(168,85,247,0.2)'; ctx.lineWidth = 1;
+            drops.forEach(d => { ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke(); d.y+=d.s; if(d.y>rain.height){d.y=-d.l; d.x=Math.random()*rain.width;}});
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
