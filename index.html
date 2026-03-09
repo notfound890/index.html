@@ -2,37 +2,164 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Jexa Official Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jexa Hub</title>
     <style>
-        body { background: #0b0b0b; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 90%; max-width: 800px; margin-top: 50px; }
-        .card { 
-            background: #1a1a1a; border: 1px solid #333; padding: 20px; 
-            border-radius: 15px; margin-bottom: 20px; transition: 0.3s;
-            box-shadow: 0 0 15px rgba(160, 32, 240, 0.1);
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-color: #0a0a0c; 
+            color: #fff; 
+            overflow-x: hidden;
+            /* Fondo con un degradado radial sutil */
+            background-image: radial-gradient(circle at 50% 0%, #2a0845 0%, #0a0a0c 60%);
+            background-attachment: fixed;
         }
-        .card:hover { transform: translateY(-5px); border-color: #a020f0; box-shadow: 0 0 20px rgba(160, 32, 240, 0.4); }
-        h1 { color: #a020f0; text-shadow: 0 0 10px #a020f0; }
-        button { 
-            background: #a020f0; color: white; border: none; padding: 10px 20px; 
-            border-radius: 5px; cursor: pointer; font-weight: bold;
+
+        /* Título Principal Animado */
+        .header { text-align: center; padding: 60px 20px 40px; }
+        .title { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #b026ff, #ff26a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(176, 38, 255, 0.5);
+            animation: pulse 2s infinite;
+        }
+        .subtitle { color: #888; font-size: 1.1rem; margin-top: 10px; letter-spacing: 2px; }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 10px #b026ff); }
+            50% { filter: drop-shadow(0 0 25px #ff26a5); }
+            100% { filter: drop-shadow(0 0 10px #b026ff); }
+        }
+
+        /* Contenedor centralizado */
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* Títulos de las Categorías */
+        .category-title { 
+            font-size: 1.8rem; 
+            color: #fff; 
+            border-bottom: 2px solid #b026ff; 
+            padding-bottom: 10px; 
+            margin: 40px 0 20px; 
+            display: inline-block;
+        }
+
+        /* Cuadrícula para las tarjetas */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        /* Diseño de las Tarjetas (Efecto Cristal) */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Brillo interno de la tarjeta al pasar el mouse */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(176,38,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #b026ff;
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.2);
+        }
+
+        .card:hover::before { opacity: 1; }
+        .card h3 { font-size: 1.4rem; color: #fff; margin-bottom: 10px; position: relative; }
+        .card p { color: #aaa; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; position: relative; }
+
+        /* Botones con degradado */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #b026ff, #7000ff);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #ff26a5, #b026ff);
+            box-shadow: 0 0 15px rgba(255, 38, 165, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Ajustes para que se vea perfecto en el celular */
+        @media (max-width: 600px) {
+            .title { font-size: 2.5rem; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <h1>JEXA HUB 🚀</h1>
-    <div class="container">
-        <div class="card">
-            <h3>Jexa Protector 🔒</h3>
-            <p>Protege tus scripts de Roblox con un ID único.</p>
-            <button onclick="window.location.href='/protector'">Ir al Protector</button>
-        </div>
-        
-        <div class="card">
-            <h3>Winder Hub ⚡</h3>
-            <p>El mejor script para simulator y survival games.</p>
-            <button onclick="navigator.clipboard.writeText('loadstring(game:HttpGet(\'TU_LINK_AQUI\'))()')">Copiar Loadstring</button>
-        </div>
+
+    <div class="header">
+        <h1 class="title">JEXA HUB</h1>
+        <p class="subtitle">El centro oficial de mis proyectos</p>
     </div>
+
+    <div class="container">
+        
+        <h2 class="category-title">🎮 Mis Scripts</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Winder Hub</h3>
+                <p>El mejor script con interfaz dinámica y funciones exclusivas para juegos de supervivencia y simuladores.</p>
+                <button class="btn" onclick="navigator.clipboard.writeText('loadstring(game:HttpGet(\'AQUI_TU_LINK\'))()'); alert('¡Loadstring copiado!');">Copiar Loadstring</button>
+            </div>
+            
+            <div class="card">
+                <h3>Auto-Farm V2</h3>
+                <p>Automatización total optimizada para ejecutores de celular sin lag.</p>
+                <button class="btn">Ver Detalles</button>
+            </div>
+        </div>
+
+        <h2 class="category-title">🌐 Páginas Web</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Jexa Tools</h3>
+                <p>Herramientas útiles y utilidades en la nube para explotar al máximo tus códigos.</p>
+                <a href="#" class="btn">Abrir Página</a>
+            </div>
+        </div>
+
+        <h2 class="category-title">📱 Redes</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Discord Oficial</h3>
+                <p>Únete a la comunidad para ser el primero en probar las nuevas actualizaciones.</p>
+                <a href="#" class="btn" style="background: #5865F2;">Unirse al Servidor</a>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>
