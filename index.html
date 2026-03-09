@@ -9,102 +9,43 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; user-select: none; }
         
-        body { background-color: #050505; color: #fff; overflow: hidden; height: 100vh; }
+        body { background-color: #020202; color: #fff; overflow: hidden; height: 100vh; }
 
-        /* --- PANTALLA DE ENTRADA --- */
+        /* --- ENTRADA --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #050505; z-index: 999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 1s ease-in-out;
+            background: #000; z-index: 999; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 1s ease-in-out;
         }
+        .welcome-text { font-size: 1.5rem; letter-spacing: 12px; text-shadow: 0 0 20px #a855f7; animation: blink 2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .enter-btn { background: transparent; border: 2px solid #a855f7; color: #fff; padding: 15px 40px; border-radius: 8px; cursor: pointer; margin-top: 30px; font-weight: bold; transition: 0.3s; }
+        .enter-btn:hover { background: #a855f7; box-shadow: 0 0 30px #a855f7; }
 
-        .welcome-text {
-            font-size: 1.5rem; color: #fff; letter-spacing: 12px; margin-bottom: 40px;
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.8); animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating { 0%, 100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(-10px); opacity: 1; } }
-
-        .enter-btn {
-            background: transparent; border: 2px solid #a855f7; color: #fff; padding: 15px 40px;
-            font-size: 1.2rem; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.4s;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-        }
-        .enter-btn:hover { background: #a855f7; box-shadow: 0 0 40px rgba(168, 85, 247, 0.7); transform: scale(1.05); }
-
-        /* --- FONDO Y LLUVIA --- */
+        /* --- FONDO --- */
         canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.8; }
         
-        /* --- NAVEGACIÓN SUPERIOR (PESTAÑAS) --- */
-        .top-nav {
-            display: flex; justify-content: center; gap: 20px; padding: 20px;
-            background: rgba(10, 10, 15, 0.8); border-bottom: 1px solid rgba(168, 85, 247, 0.3);
-            backdrop-filter: blur(10px); position: relative; z-index: 10;
-        }
-        .nav-btn {
-            background: transparent; border: none; color: #888; font-size: 1.2rem; font-weight: 700;
-            cursor: pointer; padding: 10px 20px; transition: 0.3s; letter-spacing: 2px;
-        }
-        .nav-btn.active { color: #a855f7; text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); border-bottom: 2px solid #a855f7; }
-        .nav-btn:hover { color: #fff; }
+        /* --- NAVEGACIÓN --- */
+        .top-nav { display: flex; justify-content: center; background: rgba(10,10,15,0.9); border-bottom: 1px solid #a855f7; z-index: 10; position: sticky; top: 0; }
+        .nav-btn { background: transparent; border: none; color: #666; padding: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.8rem; }
+        .nav-btn.active { color: #a855f7; border-bottom: 2px solid #a855f7; }
 
-        .header { text-align: center; padding: 30px 20px 10px; }
-        .title { 
-            font-size: 3rem; font-weight: 700; 
-            background: linear-gradient(to right, #a855f7, #ec4899);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4)); letter-spacing: -2px;
-        }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; height: calc(100vh - 180px); overflow-y: auto; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; height: calc(100vh - 80px); overflow-y: auto; scrollbar-width: none; }
         
-        /* Contenedores de las pestañas */
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- TARJETAS --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { 
-            background: rgba(15, 15, 22, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); 
-            border-radius: 20px; padding: 30px; backdrop-filter: blur(20px); transition: 0.4s ease; 
-        }
-        .card:hover { transform: translateY(-8px); border-color: #a855f7; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .card h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: rgba(20, 20, 25, 0.7); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 20px; backdrop-filter: blur(10px); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 5px; color: #fff; }
+        .card p { color: #888; font-size: 0.8rem; margin-bottom: 15px; }
+        .btn { width: 100%; background: #a855f7; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        .btn { 
-            display: block; width: 100%; background: #a855f7; color: #fff; padding: 14px; 
-            border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem;
-        }
-        .btn:hover { background: #9333ea; transform: scale(1.02); }
-
-        /* --- SECCIÓN MÚSICA --- */
+        /* --- MÚSICA --- */
         .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
-        .search-box input { 
-            flex: 1; padding: 15px; border-radius: 10px; border: 1px solid rgba(168,85,247,0.4); 
-            background: rgba(0,0,0,0.5); color: #fff; font-size: 1rem; outline: none;
-        }
-        .search-box input:focus { border-color: #ec4899; box-shadow: 0 0 15px rgba(236, 72, 153, 0.3); }
-        .resultados { display: flex; flex-direction: column; gap: 15px; }
-        .cancion-item { 
-            display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); 
-            padding: 15px; border-radius: 10px; transition: 0.3s;
-        }
-        .cancion-item:hover { background: rgba(168,85,247,0.2); }
-        .cancion-info h4 { margin-bottom: 5px; color: #fff; }
-        .cancion-info p { color: #aaa; font-size: 0.85rem; }
-        .play-btn { background: #ec4899; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .play-btn:hover { background: #be185d; }
-
-        /* Reproductor Global */
-        .reproductor-activo {
-            background: rgba(20, 20, 25, 0.9); border-top: 2px solid #a855f7;
-            position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px;
-            display: flex; justify-content: center; align-items: center; gap: 20px; z-index: 100;
-        }
-        audio { outline: none; border-radius: 30px; height: 40px; }
+        .search-box input { flex: 1; background: #111; border: 1px solid #333; padding: 12px; color: #fff; border-radius: 8px; outline: none; }
+        #music-player-container { width: 100%; border-radius: 12px; overflow: hidden; background: #111; min-height: 200px; display: flex; align-items: center; justify-content: center; }
 
         #yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
@@ -116,163 +57,117 @@
         <button class="enter-btn" onclick="entrarAlHub()">ENTRAR</button>
     </div>
 
-    <div id="yt-player"></div>
-    <canvas id="rainCanvas"></canvas>
-
     <div class="top-nav">
-        <button class="nav-btn active" onclick="cambiarPestana('scripts', this)">📜 SCRIPTS</button>
-        <button class="nav-btn" onclick="cambiarPestana('musica', this)">🎵 MÚSICA</button>
+        <button class="nav-btn active" onclick="tab('main', this)">MAIN</button>
+        <button class="nav-btn" onclick="tab('others', this)">OTHERS SCRIPTS</button>
+        <button class="nav-btn" onclick="tab('music', this)">MUSIC FULL</button>
     </div>
 
-    <div class="header"><h1 class="title">JEXA HUB</h1></div>
+    <canvas id="rainCanvas"></canvas>
+    <div id="yt-player"></div>
 
     <div class="container">
         
-        <div id="tab-scripts" class="tab-content active">
+        <div id="main" class="tab-content active">
             <div class="grid">
                 <div class="card">
                     <h3>Jexa Ping Pong</h3>
                     <p>te ayuda para que puedas hacer ping pong en los admins abuse</p>
-                    <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
+                    <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPY</button>
                 </div>
-                
                 <div class="card">
                     <h3>Jexa Duels</h3>
-                    <p>Script para pc y Android, muy completo y facil de usar para que tengas tus victorias aseguradas.</p>
-                    <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
+                    <p>Script para pc y Android, muy completo y facil de usar.</p>
+                    <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPY</button>
                 </div>
             </div>
         </div>
 
-        <div id="tab-musica" class="tab-content">
-            <div class="card" style="max-width: 600px; margin: 0 auto;">
-                <h3>Buscador de Canciones</h3>
-                <p>Busca cualquier tema (ej. Hip-hop, Trap, Eladio Carrion) y reprodúcelo aquí mismo.</p>
+        <div id="others" class="tab-content">
+            <div class="grid" id="othersGrid">
+                </div>
+        </div>
+
+        <div id="music" class="tab-content">
+            <div class="card">
+                <h3>Buscador YouTube Full</h3>
+                <p>Escribe el nombre de la canción y presiona Enter para que suene completa.</p>
                 <div class="search-box">
-                    <input type="text" id="inputMusica" placeholder="Escribe una canción o artista..." onkeypress="if(event.key === 'Enter') buscarCancion()">
-                    <button class="btn" style="width: auto;" onclick="buscarCancion()">BUSCAR</button>
+                    <input type="text" id="mInput" placeholder="Ej: Eladio Carrion 3 Am..." onkeypress="if(event.key==='Enter') buscarYT()">
                 </div>
-                <div id="resultadosMusica" class="resultados">
-                    </div>
+                <div id="music-player-container">
+                    <p id="musicStatus" style="color:#555">Esperando búsqueda...</p>
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <div class="reproductor-activo" id="reproductorAbajo" style="display: none;">
-        <span id="tituloReproduciendo" style="font-weight: bold; color: #a855f7;">Reproduciendo...</span>
-        <audio id="audioPlayer" controls></audio>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // --- YouTube Background ---
         let player;
+        const otherScripts = [
+            {n: "XLSQR X SAKURA DUELS", c: "loadstring(Game:HttpGet('https://iyfvpnjrghsownkpazec.supabase.co/functions/v1/get-paste?slug=X69tj7lY'))()"},
+            {n: "MG", c: "loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/f24b98a7a26bd68bd26fc311c558cd1f.lua'))()"},
+            {n: "LURK HUB DUELS", c: "loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/fd920d2c87a95ee573d6fde239b63d15.lua'))()"},
+            {n: "000 DUELS AUTO PLAY", c: "Loadstring(game:HttpGet('https://pastebin.com/raw/E05dV3da', true))()"},
+            {n: "AEZY AUTO DUEL", c: "loadstring(game:HttpGet('https://pastebin.com/raw/cK4pSfKJ'))()"},
+            {n: "LEX HUB", c: "loadstring(game:HttpGet('https://pastefy.app/TgrXAo7z/raw'))()"},
+            {n: "FROST HUB DUELS", c: "loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/af5e78ca32e06034a3ea30c5bf1a76c9.lua'))()"},
+            {n: "Light Duel", c: "loadstring(game:HttpGet('https://api.rubis.app/v2/scrap/dIS6cF3WKwYIHATO/raw?accessKey=C2UdA3ZMGuTlBklFfoLTGfF9FFAClVB6',true))()"},
+            {n: "Kawatan duels", c: "loadstring(game:HttpGet('https://monlua-protector.vercel.app/raw/3511f1916f88970b320f6473ae8a907c'))()"},
+            {n: "nine hub", c: "Loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/e285247e216c4ae3a89d5663b87212bd.lua'))()"},
+            {n: "EGO DUELS", c: "Loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/8273322905877bb11fbc66b9de390b7e.lua'))()"},
+            {n: "Sosa duels", c: "loadstring(game:HttpGet('https://api.jnkie.com/api/v1/luascripts/public/36f9254fca8bb9ea84cccee053bbc2b29260cb72a099832ff357f6b56b03c454/download'))()"},
+            {n: "bks hub btw", c: "loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/a7b5616e0dba9debf9d1d30cc2ceee9f.lua'))()"}
+        ];
+
+        // Cargar scripts automáticamente
+        const grid = document.getElementById('othersGrid');
+        otherScripts.forEach(s => {
+            grid.innerHTML += `<div class="card"><h3>${s.n}</h3><p>Script externo optimizado.</p><button class="btn" onclick="copiar('${s.c}')">COPY</button></div>`;
+        });
+
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-player', {
-                height: '0', width: '0', videoId: 'CKI8iQTgZKU',
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'CKI8iQTgZKU' },
-                events: { 'onReady': (e) => e.target.setVolume(25) }
-            });
+            player = new YT.Player('yt-player', { videoId: 'CKI8iQTgZKU', playerVars: { autoplay:1, loop:1, playlist:'CKI8iQTgZKU' }, events: { onReady: (e) => e.target.setVolume(20) } });
         }
 
-        function entrarAlHub() {
-            const over = document.getElementById('overlay');
-            over.style.opacity = '0';
-            setTimeout(() => over.style.display = 'none', 1000);
-            if (player) player.playVideo();
+        function tab(id, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
         }
 
-        // --- Sistema de Pestañas ---
-        function cambiarPestana(id, elemento) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('tab-' + id).classList.add('active');
-            elemento.classList.add('active');
+        function entrarAlHub() { 
+            document.getElementById('overlay').style.display = 'none'; 
+            if(player) player.playVideo(); 
         }
 
         function copiar(t) { 
             navigator.clipboard.writeText(t); 
-            let originalText = event.target.innerText;
-            event.target.innerText = '¡COPIADO!'; 
-            setTimeout(() => event.target.innerText = originalText, 2000); 
+            event.target.innerText = 'COPIED!'; 
+            setTimeout(() => event.target.innerText = 'COPY', 2000); 
         }
 
-        // --- Buscador de Música Integrado (Usando iTunes API pública) ---
-        async function buscarCancion() {
-            const query = document.getElementById('inputMusica').value;
-            if (!query) return;
-            
-            const divResultados = document.getElementById('resultadosMusica');
-            divResultados.innerHTML = '<p style="text-align:center; color:#a855f7;">Buscando...</p>';
-
-            try {
-                // Buscamos la canción sin necesidad de salir de la página
-                const respuesta = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=4`);
-                const datos = await respuesta.json();
-
-                if (datos.results.length === 0) {
-                    divResultados.innerHTML = '<p style="text-align:center; color:red;">No se encontraron canciones.</p>';
-                    return;
-                }
-
-                divResultados.innerHTML = '';
-                datos.results.forEach(cancion => {
-                    const item = document.createElement('div');
-                    item.className = 'cancion-item';
-                    item.innerHTML = `
-                        <div class="cancion-info">
-                            <h4>${cancion.trackName}</h4>
-                            <p>${cancion.artistName}</p>
-                        </div>
-                        <button class="play-btn" onclick="reproducirMusica('${cancion.previewUrl}', '${cancion.trackName} - ${cancion.artistName}')">▶ PLAY</button>
-                    `;
-                    divResultados.appendChild(item);
-                });
-            } catch (error) {
-                divResultados.innerHTML = '<p style="text-align:center; color:red;">Error al buscar la música.</p>';
-            }
+        function buscarYT() {
+            const q = document.getElementById('mInput').value;
+            const container = document.getElementById('music-player-container');
+            if(!q) return;
+            // Usamos un embed de búsqueda de YouTube para que el usuario elija y suene completa
+            container.innerHTML = `<iframe width="100%" height="300" src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(q)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            if(player) player.pauseVideo(); // Pausa la música de fondo
         }
 
-        function reproducirMusica(url, nombre) {
-            // Pausar YouTube de fondo para que no se mezclen las canciones
-            if (player && player.pauseVideo) player.pauseVideo();
-            
-            const audio = document.getElementById('audioPlayer');
-            const barra = document.getElementById('reproductorAbajo');
-            const titulo = document.getElementById('tituloReproduciendo');
-            
-            titulo.innerText = '🎵 ' + nombre;
-            audio.src = url;
-            barra.style.display = 'flex';
-            audio.play();
-        }
-
-        // --- LLUVIA ARREGLADA (Más visible y gruesa) ---
+        // --- LLUVIA ---
         const rain = document.getElementById('rainCanvas');
         const ctx = rain.getContext('2d');
         function resize() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-
-        let drops = Array(150).fill().map(() => ({
-            x: Math.random() * rain.width,
-            y: Math.random() * rain.height,
-            l: Math.random() * 30 + 15, // Gotas más largas
-            s: Math.random() * 12 + 10  // Más rápidas
-        }));
-
+        let drops = Array(150).fill().map(() => ({x:Math.random()*rain.width, y:Math.random()*rain.height, l:Math.random()*30+15, s:Math.random()*12+10}));
         function animate() {
-            ctx.clearRect(0,0,rain.width,rain.height);
-            // Color de lluvia más blanco y visible con brillo morado
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-            ctx.lineWidth = 2; // Más gruesa
-            ctx.lineCap = 'round';
-            
-            drops.forEach(d => {
-                ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke();
-                d.y += d.s;
-                if(d.y > rain.height) { d.y = -d.l; d.x = Math.random()*rain.width; }
-            });
+            ctx.clearRect(0,0,rain.width,rain.height); ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+            drops.forEach(d => { ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke(); d.y += d.s; if(d.y > rain.height) d.y = -d.l; });
             requestAnimationFrame(animate);
         }
         animate();
