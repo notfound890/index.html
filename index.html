@@ -18,70 +18,66 @@
             z-index: 100; background-size: 100% 3px, 3px 100%; pointer-events: none;
         }
 
-        /* ENTRADA */
+        /* ENTRADA - FIX CRÍTICO */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 999; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 1.2s ease-in-out;
+            background: #000; z-index: 1000; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; visibility: visible; opacity: 1; transition: 0.8s ease;
         }
-        .welcome-text { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 15px; text-shadow: 0 0 30px #a855f7; }
-        .enter-btn { margin-top: 40px; background: transparent; border: 1px solid #a855f7; color: #fff; padding: 15px 50px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px; transition: 0.5s; }
+        .welcome-text { font-family: 'Orbitron'; font-size: 2.2rem; letter-spacing: 10px; text-shadow: 0 0 30px #a855f7; text-align: center; margin: 20px; }
+        .enter-btn { background: transparent; border: 2px solid #a855f7; color: #fff; padding: 15px 45px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px; transition: 0.3s; font-weight: bold; }
         .enter-btn:hover { background: #a855f7; box-shadow: 0 0 40px #a855f7; }
 
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.7; }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
 
         /* NAVEGACIÓN */
-        .top-nav { display: flex; justify-content: center; background: rgba(0,0,0,0.85); border-bottom: 1px solid #a855f7; backdrop-filter: blur(10px); z-index: 10; position: sticky; top: 0; }
-        .nav-btn { background: transparent; border: none; color: #666; padding: 20px 25px; font-weight: bold; cursor: pointer; transition: 0.4s; font-size: 0.85rem; letter-spacing: 2px; }
+        .top-nav { display: flex; justify-content: center; background: rgba(0,0,0,0.9); border-bottom: 1px solid #a855f7; z-index: 10; position: sticky; top: 0; }
+        .nav-btn { background: transparent; border: none; color: #777; padding: 18px 15px; font-weight: bold; cursor: pointer; transition: 0.4s; font-size: 0.75rem; letter-spacing: 1px; }
         .nav-btn.active { color: #a855f7; border-bottom: 3px solid #a855f7; text-shadow: 0 0 10px #a855f7; }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 30px 20px; height: calc(100vh - 70px); overflow-y: auto; scrollbar-width: none; }
+        .container { max-width: 900px; margin: 0 auto; padding: 25px 15px; height: calc(100vh - 65px); overflow-y: auto; scrollbar-width: none; }
         .container::-webkit-scrollbar { display: none; }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-content { display: none; opacity: 0; transition: 0.3s; }
+        .tab-content.active { display: block; opacity: 1; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
 
-        .card { background: rgba(15, 15, 20, 0.6); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 8px; padding: 25px; transition: 0.3s; }
-        .card:hover { border-color: #a855f7; transform: translateY(-5px); }
-        .card h3 { font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 10px; }
+        .card { background: rgba(15, 15, 20, 0.8); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 20px; transition: 0.3s; }
+        .card:hover { border-color: #a855f7; transform: scale(1.02); }
+        .card h3 { font-family: 'Orbitron'; font-size: 0.95rem; margin-bottom: 8px; color: #fff; }
         
         .btn { 
             width: 100%; background: #a855f7; color: white; border: none; padding: 12px; 
-            border-radius: 4px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.75rem;
+            border-radius: 5px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.3s;
         }
-        .btn:hover { background: #6d28d9; letter-spacing: 2px; }
+        .btn:hover { filter: brightness(1.2); letter-spacing: 1px; }
 
-        /* SECCIÓN MÚSICA ARREGLADA */
-        .music-box { background: rgba(10,10,15,0.95); border: 1px solid #a855f7; border-radius: 12px; padding: 25px; max-width: 600px; margin: 0 auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        .discord-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.7rem; margin-bottom: 20px; transition: 0.3s; }
-        .discord-btn:hover { background: #4752c4; box-shadow: 0 0 15px #5865F2; }
-
-        .search-bar { display: flex; gap: 10px; margin-bottom: 15px; }
-        .search-bar input { flex: 1; background: #000; border: 1px solid #333; padding: 12px; color: #fff; border-radius: 6px; outline: none; }
+        /* MÚSICA & DISCORD */
+        .music-box { background: rgba(10,10,15,0.95); border: 1px solid #a855f7; border-radius: 12px; padding: 20px; max-width: 550px; margin: 0 auto; }
+        .discord-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 8px; font-family: 'Orbitron'; font-size: 0.75rem; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(88,101,242,0.3); }
         
-        .results-list { display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto; margin-bottom: 15px; }
-        .track-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+        .search-bar { display: flex; gap: 8px; margin-bottom: 15px; }
+        .search-bar input { flex: 1; background: #000; border: 1px solid #333; padding: 12px; color: #fff; border-radius: 6px; outline: none; font-size: 0.9rem; }
+        
+        .results-list { display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto; }
+        .track-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; }
         .track-item:hover { border-color: #a855f7; background: rgba(168,85,247,0.1); }
-        .track-item img { width: 45px; height: 45px; border-radius: 4px; }
-        .track-info h4 { font-size: 0.8rem; color: #fff; }
-        .track-info p { font-size: 0.65rem; color: #777; }
-
-        #player-container { width: 100%; border-radius: 8px; overflow: hidden; background: #000; min-height: 80px; }
+        .track-item img { width: 40px; height: 40px; border-radius: 4px; }
+        .track-info h4 { font-size: 0.8rem; }
+        .track-info p { font-size: 0.6rem; color: #888; }
     </style>
 </head>
 <body>
 
     <div id="overlay">
         <h2 class="welcome-text">JEXA HUB</h2>
-        <button class="enter-btn" onclick="entrar()">ENTRAR</button>
+        <button class="enter-btn" onclick="entrarYa()">ENTRAR</button>
     </div>
 
     <div class="top-nav">
-        <button class="nav-btn active" onclick="tab('main', this)">SCRIPTS</button>
+        <button id="navMain" class="nav-btn active" onclick="tab('main', this)">SCRIPTS</button>
         <button class="nav-btn" onclick="tab('others', this)">OTHERS SCRIPTS</button>
         <button class="nav-btn" onclick="tab('music', this)">MÚSICA</button>
     </div>
@@ -93,12 +89,12 @@
             <div class="grid">
                 <div class="card">
                     <h3>Jexa Ping Pong</h3>
-                    <p style="color:#888; font-size:0.8rem; margin-bottom:20px;">te ayuda para que puedas hacer ping pong en los admins abuse</p>
+                    <p style="color:#aaa; font-size:0.75rem; margin-bottom:15px;">te ayuda para que puedas hacer ping pong en los admins abuse</p>
                     <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
                 </div>
                 <div class="card">
                     <h3>Jexa Duels</h3>
-                    <p style="color:#888; font-size:0.8rem; margin-bottom:20px;">Script para pc y Android, muy completo.</p>
+                    <p style="color:#aaa; font-size:0.75rem; margin-bottom:15px;">Script para pc y Android, muy completo.</p>
                     <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
                 </div>
             </div>
@@ -111,20 +107,18 @@
         <div id="music" class="tab-content">
             <div class="music-box">
                 <a href="https://discord.gg/Ykm9kVuBe" target="_blank" class="discord-btn">ÚNETE AL DISCORD</a>
-                
                 <div class="search-bar">
-                    <input type="text" id="mInput" placeholder="Busca tu canción..." onkeypress="if(event.key==='Enter') buscar()">
-                    <button class="btn" style="width:auto; padding:0 20px;" onclick="buscar()">BUSCAR</button>
+                    <input type="text" id="mInput" placeholder="Nombre de canción..." onkeypress="if(event.key==='Enter') buscarMusica()">
+                    <button class="btn" style="width:auto; padding:0 15px;" onclick="buscarMusica()">BUSCAR</button>
                 </div>
                 <div id="results" class="results-list"></div>
-                <div id="player-container">
-                    <p style="text-align:center; color:#444; margin-top:30px; font-size:0.7rem; font-family:'Orbitron';">SISTEMA DE AUDIO LISTO</p>
-                </div>
+                <div id="player-container" style="margin-top:15px;"></div>
             </div>
         </div>
     </div>
 
     <script>
+        // Scripts masivos
         const otherScripts = [
             {n: "XLSQR X SAKURA DUELS", c: "loadstring(Game:HttpGet('https://iyfvpnjrghsownkpazec.supabase.co/functions/v1/get-paste?slug=X69tj7lY'))()"},
             {n: "MG", c: "loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/f24b98a7a26bd68bd26fc311c558cd1f.lua'))()"},
@@ -143,8 +137,15 @@
 
         const grid = document.getElementById('othersGrid');
         otherScripts.forEach(s => {
-            grid.innerHTML += `<div class="card"><h3>${s.n}</h3><p style="color:#666; font-size:0.75rem; margin-bottom:15px;">External logic.</p><button class="btn" onclick="copiar('${s.c}')">COPIAR SCRIPT</button></div>`;
+            grid.innerHTML += `<div class="card"><h3>${s.n}</h3><button class="btn" onclick="copiar('${s.c}')">COPIAR SCRIPT</button></div>`;
         });
+
+        // FUNCIONES DE CONTROL
+        function entrarYa() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 800);
+        }
 
         function tab(id, el) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -153,27 +154,21 @@
             el.classList.add('active');
         }
 
-        function entrar() {
-            document.getElementById('overlay').style.opacity = "0";
-            setTimeout(() => document.getElementById('overlay').style.display = 'none', 1000);
-        }
-
         function copiar(t) { 
-            navigator.clipboard.writeText(t); 
-            let o = event.target.innerText;
-            event.target.innerText = '¡COPIADO!'; 
-            setTimeout(() => event.target.innerText = o, 1500); 
+            const el = document.createElement('textarea');
+            el.value = t; document.body.appendChild(el); el.select();
+            document.execCommand('copy'); document.body.removeChild(el);
+            let o = event.target.innerText; event.target.innerText = '¡LISTO!'; 
+            setTimeout(() => event.target.innerText = o, 1200); 
         }
 
-        // --- MOTOR DE MÚSICA ARREGLADO ---
-        async function buscar() {
+        async function buscarMusica() {
             const q = document.getElementById('mInput').value;
             if(!q) return;
             const resDiv = document.getElementById('results');
-            resDiv.innerHTML = '<p style="text-align:center; font-size:0.8rem;">Buscando en la base de datos...</p>';
-
+            resDiv.innerHTML = '<p style="text-align:center; font-size:0.7rem;">Buscando...</p>';
             try {
-                const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=6&entity=song`);
+                const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=5&entity=song`);
                 const d = await r.json();
                 resDiv.innerHTML = '';
                 d.results.forEach(t => {
@@ -181,16 +176,25 @@
                     div.className = 'track-item';
                     div.innerHTML = `<img src="${t.artworkUrl60}"><div class="track-info"><h4>${t.trackName}</h4><p>${t.artistName}</p></div>`;
                     div.onclick = () => {
-                        document.getElementById('player-container').innerHTML = `<audio controls autoplay style="width:100%; margin-top:20px;"><source src="${t.previewUrl}" type="audio/mpeg"></audio><p style="text-align:center; font-size:0.6rem; color:#a855f7; margin-top:5px;">Reproduciendo: ${t.trackName}</p>`;
+                        document.getElementById('player-container').innerHTML = `<audio controls autoplay style="width:100%;"><source src="${t.previewUrl}" type="audio/mpeg"></audio>`;
                     };
                     resDiv.appendChild(div);
                 });
-            } catch(e) { resDiv.innerHTML = '<p>Error de conexión.</p>'; }
+            } catch(e) { resDiv.innerHTML = '<p>Sin conexión.</p>'; }
         }
 
         // LLUVIA
         const rain = document.getElementById('rainCanvas');
         const ctx = rain.getContext('2d');
-        function resize() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        let drops = Array(150).fill().map(() => ({x:Math.random()*rain.width, y:Math.random()*rain.height, l:Math.random
+        function res() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
+        window.onresize = res; res();
+        let drops = Array(120).fill().map(() => ({x:Math.random()*rain.width, y:Math.random()*rain.height, l:Math.random()*20, s:Math.random()*10+5}));
+        function anim() {
+            ctx.clearRect(0,0,rain.width,rain.height); ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)'; ctx.lineWidth = 1.5;
+            drops.forEach(d => { ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke(); d.y += d.s; if(d.y > rain.height) d.y = -d.l; });
+            requestAnimationFrame(anim);
+        }
+        anim();
+    </script>
+</body>
+</html>
