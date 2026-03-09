@@ -22,7 +22,7 @@
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 999; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            align-items: center; justify-content: center; transition: 1.2s ease-in-out;
         }
         .welcome-text { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 15px; text-shadow: 0 0 30px #a855f7; }
         .enter-btn { margin-top: 40px; background: transparent; border: 1px solid #a855f7; color: #fff; padding: 15px 50px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px; transition: 0.5s; }
@@ -47,8 +47,7 @@
         .card { background: rgba(15, 15, 20, 0.6); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 8px; padding: 25px; transition: 0.3s; }
         .card:hover { border-color: #a855f7; transform: translateY(-5px); }
         .card h3 { font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 10px; }
-        .card p { color: #888; font-size: 0.85rem; margin-bottom: 20px; }
-
+        
         .btn { 
             width: 100%; background: #a855f7; color: white; border: none; padding: 12px; 
             border-radius: 4px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.75rem;
@@ -57,18 +56,21 @@
         .btn:hover { background: #6d28d9; letter-spacing: 2px; }
 
         /* SECCIÓN MÚSICA ARREGLADA */
-        .music-box { background: rgba(10,10,15,0.9); border: 1px solid #a855f7; border-radius: 12px; padding: 25px; max-width: 650px; margin: 0 auto; }
-        .search-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .music-box { background: rgba(10,10,15,0.95); border: 1px solid #a855f7; border-radius: 12px; padding: 25px; max-width: 600px; margin: 0 auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .discord-btn { display: block; background: #5865F2; color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 6px; font-family: 'Orbitron'; font-size: 0.7rem; margin-bottom: 20px; transition: 0.3s; }
+        .discord-btn:hover { background: #4752c4; box-shadow: 0 0 15px #5865F2; }
+
+        .search-bar { display: flex; gap: 10px; margin-bottom: 15px; }
         .search-bar input { flex: 1; background: #000; border: 1px solid #333; padding: 12px; color: #fff; border-radius: 6px; outline: none; }
         
-        .results-list { display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
-        .track-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; cursor: pointer; transition: 0.3s; }
-        .track-item:hover { background: rgba(168,85,247,0.2); }
-        .track-item img { width: 40px; height: 40px; border-radius: 4px; }
-        .track-info h4 { font-size: 0.85rem; }
-        .track-info p { font-size: 0.7rem; color: #888; }
+        .results-list { display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto; margin-bottom: 15px; }
+        .track-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+        .track-item:hover { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+        .track-item img { width: 45px; height: 45px; border-radius: 4px; }
+        .track-info h4 { font-size: 0.8rem; color: #fff; }
+        .track-info p { font-size: 0.65rem; color: #777; }
 
-        #player-container { width: 100%; border-radius: 12px; overflow: hidden; height: 90px; }
+        #player-container { width: 100%; border-radius: 8px; overflow: hidden; background: #000; min-height: 80px; }
     </style>
 </head>
 <body>
@@ -91,12 +93,12 @@
             <div class="grid">
                 <div class="card">
                     <h3>Jexa Ping Pong</h3>
-                    <p>te ayuda para que puedas hacer ping pong en los admins abuse</p>
+                    <p style="color:#888; font-size:0.8rem; margin-bottom:20px;">te ayuda para que puedas hacer ping pong en los admins abuse</p>
                     <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
                 </div>
                 <div class="card">
                     <h3>Jexa Duels</h3>
-                    <p>Script para pc y Android, muy completo.</p>
+                    <p style="color:#888; font-size:0.8rem; margin-bottom:20px;">Script para pc y Android, muy completo.</p>
                     <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
                 </div>
             </div>
@@ -108,14 +110,15 @@
 
         <div id="music" class="tab-content">
             <div class="music-box">
-                <h3 style="font-family:'Orbitron'; font-size:0.8rem; margin-bottom:15px; color:#a855f7;">AUDIO PLAYER PRO</h3>
+                <a href="https://discord.gg/Ykm9kVuBe" target="_blank" class="discord-btn">ÚNETE AL DISCORD</a>
+                
                 <div class="search-bar">
-                    <input type="text" id="mInput" placeholder="Busca una canción..." onkeypress="if(event.key==='Enter') buscarMusica()">
-                    <button class="btn" style="width:auto; padding:0 20px;" onclick="buscarMusica()">BUSCAR</button>
+                    <input type="text" id="mInput" placeholder="Busca tu canción..." onkeypress="if(event.key==='Enter') buscar()">
+                    <button class="btn" style="width:auto; padding:0 20px;" onclick="buscar()">BUSCAR</button>
                 </div>
                 <div id="results" class="results-list"></div>
                 <div id="player-container">
-                    <p style="text-align:center; color:#333; margin-top:30px;">Selecciona una canción</p>
+                    <p style="text-align:center; color:#444; margin-top:30px; font-size:0.7rem; font-family:'Orbitron';">SISTEMA DE AUDIO LISTO</p>
                 </div>
             </div>
         </div>
@@ -140,7 +143,7 @@
 
         const grid = document.getElementById('othersGrid');
         otherScripts.forEach(s => {
-            grid.innerHTML += `<div class="card"><h3>${s.n}</h3><p>External Script</p><button class="btn" onclick="copiar('${s.c}')">COPIAR SCRIPT</button></div>`;
+            grid.innerHTML += `<div class="card"><h3>${s.n}</h3><p style="color:#666; font-size:0.75rem; margin-bottom:15px;">External logic.</p><button class="btn" onclick="copiar('${s.c}')">COPIAR SCRIPT</button></div>`;
         });
 
         function tab(id, el) {
@@ -157,44 +160,32 @@
 
         function copiar(t) { 
             navigator.clipboard.writeText(t); 
-            event.target.innerText = '¡LISTO!'; 
-            setTimeout(() => event.target.innerText = 'COPIAR SCRIPT', 1500); 
+            let o = event.target.innerText;
+            event.target.innerText = '¡COPIADO!'; 
+            setTimeout(() => event.target.innerText = o, 1500); 
         }
 
-        // --- BUSCADOR DEEZER (MÚSICA ARREGLADA) ---
-        async function buscarMusica() {
+        // --- MOTOR DE MÚSICA ARREGLADO ---
+        async function buscar() {
             const q = document.getElementById('mInput').value;
             if(!q) return;
             const resDiv = document.getElementById('results');
-            resDiv.innerHTML = '<p style="text-align:center;">Buscando...</p>';
+            resDiv.innerHTML = '<p style="text-align:center; font-size:0.8rem;">Buscando en la base de datos...</p>';
 
             try {
-                // Usamos un proxy público para evitar bloqueos de CORS
-                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.deezer.com/search?q=${q}&limit=5`)}`);
-                const data = JSON.parse((await response.json()).contents);
-
+                const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&limit=6&entity=song`);
+                const d = await r.json();
                 resDiv.innerHTML = '';
-                data.data.forEach(track => {
-                    const item = document.createElement('div');
-                    item.className = 'track-item';
-                    item.innerHTML = `
-                        <img src="${track.album.cover_small}">
-                        <div class="track-info">
-                            <h4>${track.title}</h4>
-                            <p>${track.artist.name}</p>
-                        </div>
-                    `;
-                    item.onclick = () => reproducir(track.id);
-                    resDiv.appendChild(item);
+                d.results.forEach(t => {
+                    const div = document.createElement('div');
+                    div.className = 'track-item';
+                    div.innerHTML = `<img src="${t.artworkUrl60}"><div class="track-info"><h4>${t.trackName}</h4><p>${t.artistName}</p></div>`;
+                    div.onclick = () => {
+                        document.getElementById('player-container').innerHTML = `<audio controls autoplay style="width:100%; margin-top:20px;"><source src="${t.previewUrl}" type="audio/mpeg"></audio><p style="text-align:center; font-size:0.6rem; color:#a855f7; margin-top:5px;">Reproduciendo: ${t.trackName}</p>`;
+                    };
+                    resDiv.appendChild(div);
                 });
-            } catch (e) {
-                resDiv.innerHTML = '<p style="color:red;">Error al buscar música.</p>';
-            }
-        }
-
-        function reproducir(id) {
-            const container = document.getElementById('player-container');
-            container.innerHTML = `<iframe scrolling="no" frameborder="0" allowTransparency="true" src="https://www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=false&width=700&height=90&color=a855f7&layout=dark&size=medium&type=tracks&id=${id}" width="100%" height="90"></iframe>`;
+            } catch(e) { resDiv.innerHTML = '<p>Error de conexión.</p>'; }
         }
 
         // LLUVIA
@@ -202,13 +193,4 @@
         const ctx = rain.getContext('2d');
         function resize() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-        let drops = Array(150).fill().map(() => ({x:Math.random()*rain.width, y:Math.random()*rain.height, l:Math.random()*25, s:Math.random()*12+5}));
-        function animate() {
-            ctx.clearRect(0,0,rain.width,rain.height); ctx.strokeStyle = 'rgba(168, 85, 247, 0.5)'; ctx.lineWidth = 1.5;
-            drops.forEach(d => { ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke(); d.y += d.s; if(d.y > rain.height) d.y = -d.l; });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
-</body>
-</html>
+        let drops = Array(150).fill().map(() => ({x:Math.random()*rain.width, y:Math.random()*rain.height, l:Math.random
