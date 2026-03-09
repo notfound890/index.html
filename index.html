@@ -16,80 +16,88 @@
             height: 100vh;
         }
 
-        /* --- NUEVA INTERFAZ DE ENTRADA --- */
+        /* --- PANTALLA DE INICIO CON MÁS VIDA --- */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #050505, #1a0b2e);
+            background: radial-gradient(circle at center, #1a0b2e 0%, #050505 100%);
             z-index: 999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 1s ease-in-out;
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #fff;
+            letter-spacing: 12px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(-10px); opacity: 1; }
         }
 
         .enter-btn {
-            background: rgba(168, 85, 247, 0.1);
+            background: transparent;
             border: 2px solid #a855f7;
             color: #fff;
-            padding: 20px 50px;
-            font-size: 1.5rem;
+            padding: 15px 40px;
+            font-size: 1.2rem;
             font-weight: 700;
-            border-radius: 50px;
+            border-radius: 12px;
             cursor: pointer;
-            letter-spacing: 5px;
             transition: 0.4s;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
-            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .enter-btn:hover {
             background: #a855f7;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
-            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.7);
+            transform: scale(1.05);
         }
 
-        /* --- FONDO Y LLUVIA --- */
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; }
-        .glow-bg {
-            position: fixed; top: -15%; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(147, 51, 234, 0.1) 0%, transparent 70%);
-            z-index: -2;
-        }
-
-        /* --- DISEÑO PRINCIPAL --- */
-        .header { text-align: center; padding: 120px 20px 80px; }
+        /* --- FONDO Y DISEÑO --- */
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+        
+        .header { text-align: center; padding: 50px 20px 30px; }
         .title { 
-            font-size: 5.5rem; font-weight: 700; 
+            font-size: 3.2rem; /* Más pequeño como pediste */
+            font-weight: 700; 
             background: linear-gradient(to right, #a855f7, #ec4899);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5));
-            letter-spacing: -5px;
+            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4));
+            letter-spacing: -2px;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; position: relative; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 50px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
         .card { 
-            background: rgba(15, 15, 22, 0.3); 
+            background: rgba(15, 15, 22, 0.5); 
             border: 1px solid rgba(255, 255, 255, 0.05); 
-            border-radius: 28px; padding: 45px; 
-            backdrop-filter: blur(25px); 
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border-radius: 20px; padding: 30px; /* Más pequeño */
+            backdrop-filter: blur(20px); 
+            transition: 0.4s ease; 
         }
         .card:hover { 
-            transform: translateY(-20px); 
+            transform: translateY(-8px); 
             border-color: #a855f7; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
-        .card h3 { font-size: 2rem; margin-bottom: 15px; color: #fff; letter-spacing: -1px; }
-        .card p { color: #8e9bb1; font-size: 1.05rem; margin-bottom: 35px; line-height: 1.8; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; }
 
         .btn { 
             display: block; width: 100%; 
-            background: linear-gradient(45deg, #a855f7, #7c3aed); 
-            color: #fff; padding: 18px; border: none; border-radius: 16px; 
-            font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+            background: #a855f7; 
+            color: #fff; padding: 14px; border: none; border-radius: 10px; 
+            font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem;
         }
-        .btn:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
+        .btn:hover { background: #9333ea; transform: scale(1.02); }
 
         #yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
@@ -97,13 +105,12 @@
 <body>
 
     <div id="overlay">
-        <h3 style="margin-bottom: 30px; letter-spacing: 10px; color: rgba(255,255,255,0.4);">JEXA HUB</h3>
-        <button class="enter-btn" onclick="entrarAlHub()">ENTER HUB</button>
+        <h2 class="welcome-text">JEXA HUB</h2>
+        <button class="enter-btn" onclick="entrarAlHub()">ENTRAR</button>
     </div>
 
     <div id="yt-player"></div>
 
-    <div class="glow-bg"></div>
     <canvas id="rainCanvas"></canvas>
 
     <div class="header"><h1 class="title">JEXA HUB</h1></div>
@@ -112,13 +119,13 @@
         <div class="grid">
             <div class="card">
                 <h3>Jexa Ping Pong</h3>
-                <p>Pa' que domines el Ping Pong fácil. Carga al toque, es súper ligero y no da bajones de FPS. Está rotísimo para ganar siempre.</p>
+                <p>te ayuda para que puedas hacer ping pong en los admins abuse</p>
                 <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
             </div>
             
             <div class="card">
                 <h3>Jexa Duels</h3>
-                <p>No te van a ganar ni una sola. Optimizado pa' que no se te cierre el juego en medio del duelo. Funciona flama en Android y PC.</p>
+                <p>Script para pc y Android, muy completo y facil de usar para que tengas tus victorias aseguradas.</p>
                 <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
             </div>
         </div>
@@ -138,16 +145,13 @@
         function entrarAlHub() {
             const over = document.getElementById('overlay');
             over.style.opacity = '0';
-            over.style.transform = 'scale(1.5)';
             setTimeout(() => over.style.display = 'none', 1000);
-            
-            // Solo arranca la música
             if (player) player.playVideo();
         }
 
         function copiar(t) { 
             navigator.clipboard.writeText(t); 
-            event.target.innerText = '¡COPIADO! ✔️'; 
+            event.target.innerText = '¡COPIADO!'; 
             setTimeout(() => event.target.innerText = 'COPIAR SCRIPT', 2000); 
         }
 
@@ -157,11 +161,11 @@
         function resize() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
-        let drops = Array(120).fill().map(() => ({
+        let drops = Array(100).fill().map(() => ({
             x: Math.random() * rain.width,
             y: Math.random() * rain.height,
-            l: Math.random() * 30 + 10,
-            s: Math.random() * 10 + 10
+            l: Math.random() * 20 + 10,
+            s: Math.random() * 8 + 10
         }));
 
         function animate() {
