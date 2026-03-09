@@ -6,41 +6,94 @@
     <title>Jexa Hub | Official</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; user-select: none; }
-        body { background-color: #050505; color: #fff; overflow-x: hidden; }
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
-        .glow-bg { position: fixed; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(147, 51, 234, 0.1) 0%, transparent 70%); z-index: -1; }
-        .header { text-align: center; padding: 60px 20px 30px; }
-        .title { font-size: 4.5rem; font-weight: 700; background: linear-gradient(to right, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)); letter-spacing: -3px; }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         
-        /* Diseño Pro */
-        .card { background: rgba(15, 15, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 30px; backdrop-filter: blur(15px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card:hover { transform: translateY(-10px); border-color: #a855f7; box-shadow: 0 15px 40px rgba(0,0,0,0.7); }
-        .card h3 { font-size: 1.6rem; margin-bottom: 12px; color: #fff; letter-spacing: -1px; }
-        .card p { color: #999; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; }
-        
-        .btn { display: block; width: 100%; background: linear-gradient(45deg, #a855f7, #7c3aed); color: #fff; padding: 14px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; text-transform: uppercase; }
-        .btn:hover { filter: brightness(1.2); transform: scale(1.03); box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
-        
-        #start-audio { position: fixed; bottom: 30px; right: 30px; background: #a855f7; padding: 15px 25px; border-radius: 50px; color: #fff; cursor: pointer; z-index: 100; font-weight: 900; border: none; box-shadow: 0 0 30px rgba(168,85,247,0.6); animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        
-        /* Ocultar el reproductor de YT */
+        body { 
+            background-color: #050505; 
+            color: #fff; 
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* Pantalla de Entrada (Para que la música suene) */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050505; z-index: 999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.8s ease;
+        }
+        #overlay h2 { font-size: 1.2rem; color: #a855f7; letter-spacing: 5px; margin-bottom: 20px; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Canvas de Lluvia */
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
+
+        /* Fondo con Luces */
+        .glow-bg {
+            position: fixed; top: -15%; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.12) 0%, transparent 70%);
+            z-index: -2;
+        }
+
+        /* Header con más aire */
+        .header { text-align: center; padding: 100px 20px 80px; }
+        .title { 
+            font-size: 5rem; font-weight: 700; 
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.6));
+            letter-spacing: -4px;
+        }
+
+        /* Contenedor Espacioso */
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; position: relative; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+
+        /* Tarjetas Estilo Glassmorphism Pro */
+        .card { 
+            background: rgba(15, 15, 22, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.03); 
+            border-radius: 24px; padding: 40px; 
+            backdrop-filter: blur(20px); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .card:hover { 
+            transform: translateY(-15px); 
+            border-color: rgba(168, 85, 247, 0.4); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        }
+        .card h3 { font-size: 1.8rem; margin-bottom: 15px; color: #fff; letter-spacing: -1px; }
+        .card p { color: #94a3b8; font-size: 1rem; margin-bottom: 35px; line-height: 1.7; }
+
+        /* Botones Facheros */
+        .btn { 
+            display: block; width: 100%; 
+            background: linear-gradient(45deg, #a855f7, #7c3aed); 
+            color: #fff; padding: 16px; border: none; border-radius: 14px; 
+            font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+        }
+        .btn:hover { filter: brightness(1.2); box-shadow: 0 0 25px rgba(168, 85, 247, 0.5); }
+        .btn:active { transform: scale(0.95); }
+
+        /* Ocultar YouTube */
         #yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
+
+    <div id="overlay" onclick="entrarAlHub()">
+        <h2>CLICK PARA ENTRAR</h2>
+        <p style="color: #444; font-size: 0.8rem;">JEXA HUB SCRIPTS</p>
+    </div>
+
+    <div id="yt-player"></div>
     <audio id="rainSound" loop src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3?filename=heavy-rain-nature-sounds-8186.mp3"></audio>
     <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_78ecbdcebb.mp3?filename=ui-click-43196.mp3"></audio>
-    
-    <div id="yt-player"></div>
 
     <div class="glow-bg"></div>
     <canvas id="rainCanvas"></canvas>
-    
-    <button id="start-audio" onclick="activarTodo()">🌧️ ACTIVAR EXPERIENCIA</button>
 
     <div class="header"><h1 class="title">JEXA HUB</h1></div>
 
@@ -48,12 +101,13 @@
         <div class="grid">
             <div class="card">
                 <h3>Jexa Ping Pong</h3>
-                <p>Pa' que domines el Ping Pong fácil. Carga al toque, es súper ligero y no da bajones de FPS. Está rotísimo.</p>
+                <p>Te ayuda mucho en los admins abuses para que puedas hacer auto ping pong sin tener que preocuparte.</p>
                 <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/b2529dca38c794579ded1ac8068c3aa1/raw\'))()')">COPIAR SCRIPT</button>
             </div>
+            
             <div class="card">
-                <h3>Jexa Duels (PC/Android)</h3>
-                <p>No te van a ganar ni una sola. Optimizado pa' que no se te cierre el juego en medio del duelo. Funciona en todo.</p>
+                <h3>Jexa Duels</h3>
+                <p>uno de los mejores scripts de duelos gratis, muy completo y te asegura la victoria.</p>
                 <button class="btn" onclick="copiar('loadstring(game:HttpGet(\'https://gist.githubusercontent.com/jesuanx7/ca0c614e004e839d3b92504798065895/raw\'))()')">COPIAR SCRIPT</button>
             </div>
         </div>
@@ -64,20 +118,17 @@
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
-                height: '0', width: '0',
-                videoId: 'CKI8iQTgZKU',
-                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'CKI8iQTgZKU' },
-                events: { 'onReady': (e) => e.target.setVolume(30) } // Volumen moderado (30%)
+                height: '0', width: '0', videoId: 'CKI8iQTgZKU',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'CKI8iQTgZKU' },
+                events: { 'onReady': (e) => e.target.setVolume(35) }
             });
         }
 
-        function activarTodo() {
-            // Activar YouTube
+        function entrarAlHub() {
+            document.getElementById('overlay').style.opacity = '0';
+            setTimeout(() => document.getElementById('overlay').style.display = 'none', 800);
             if (player) player.playVideo();
-            // Activar Lluvia
             document.getElementById('rainSound').play();
-            // Ocultar botón
-            document.getElementById('start-audio').style.display = 'none';
         }
 
         function copiar(t) { 
@@ -87,14 +138,28 @@
             setTimeout(() => event.target.innerText = 'COPIAR SCRIPT', 2000); 
         }
 
-        // --- LLUVIA ---
+        // --- LLUVIA MEJORADA ---
         const rain = document.getElementById('rainCanvas');
         const ctx = rain.getContext('2d');
-        rain.width = window.innerWidth; rain.height = window.innerHeight;
-        let drops = Array(150).fill().map(() => ({x: Math.random()*rain.width, y: Math.random()*rain.height, l: Math.random()*20+10, s: Math.random()*10+15}));
+        function resize() { rain.width = window.innerWidth; rain.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        let drops = Array(120).fill().map(() => ({
+            x: Math.random() * rain.width,
+            y: Math.random() * rain.height,
+            l: Math.random() * 25 + 15,
+            s: Math.random() * 8 + 12
+        }));
+
         function animate() {
-            ctx.clearRect(0,0,rain.width,rain.height); ctx.strokeStyle = 'rgba(168,85,247,0.2)'; ctx.lineWidth = 1;
-            drops.forEach(d => { ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke(); d.y+=d.s; if(d.y>rain.height){d.y=-d.l; d.x=Math.random()*rain.width;}});
+            ctx.clearRect(0,0,rain.width,rain.height);
+            ctx.strokeStyle = 'rgba(168,85,247,0.3)';
+            ctx.lineWidth = 1.5;
+            drops.forEach(d => {
+                ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y+d.l); ctx.stroke();
+                d.y += d.s;
+                if(d.y > rain.height) { d.y = -d.l; d.x = Math.random()*rain.width; }
+            });
             requestAnimationFrame(animate);
         }
         animate();
