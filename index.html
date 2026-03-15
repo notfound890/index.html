@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotFound Web Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NotFound <span>AI</span></h1>
+            <p>Script Manager & Multimedia Search</p>
+        </header>
 
+        <nav>
+            <button onclick="showTab('editor')">Editor Pro</button>
+            <button onclick="showTab('search')">Buscador</button>
+        </nav>
+
+        <section id="editor" class="tab-content active">
+            <textarea id="codeInput" placeholder="Pega tus 3000+ líneas aquí..."></textarea>
+            <input type="text" id="instruction" placeholder="¿Qué quieres cambiar?">
+            <button class="btn-main" onclick="processScript()">Procesar con Groq</button>
+        </section>
+
+        <section id="search" class="tab-content">
+            <input type="text" id="searchQuery" placeholder="Buscar imágenes o videos...">
+            <div class="search-btns">
+                <button onclick="webSearch('img')">Imágenes</button>
+                <button onclick="webSearch('vid')">Videos</button>
+            </div>
+            <div id="results"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
